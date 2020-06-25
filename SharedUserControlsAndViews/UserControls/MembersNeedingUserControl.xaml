@@ -1,0 +1,53 @@
+﻿<UserControl x:Class="WFDMemberStatus.UserControlsAndViews.MembersNeedingUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WFDMemberStatus.UserControlsAndViews"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+            TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+            TextElement.FontWeight="Regular"
+            TextElement.FontSize="12"
+            TextOptions.TextFormattingMode="Ideal"
+            TextOptions.TextRenderingMode="Auto"
+            Background="{DynamicResource MaterialDesignPaper}"
+            FontFamily="{DynamicResource MaterialDesignFont}"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/UserControlsAndViews;component/ResourceDictionary.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.LightBlue.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Blue.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <materialDesign:ColorZone Mode="PrimaryMid" Grid.Row="0">
+            <WrapPanel Orientation="Horizontal" Margin="5 5 5 5">
+                <RadioButton Style="{StaticResource MaterialDesignTabRadioButton}" x:Name="rbTab1" Margin="4" Content="Department Refresher" IsChecked="True"/>
+                <RadioButton Style="{StaticResource MaterialDesignTabRadioButton}" x:Name="rbTab2" Margin="4" Content="HazMat Operations Refresher"/>
+                <RadioButton Style="{StaticResource MaterialDesignTabRadioButton}" x:Name="rbTab3" Margin="4" Content="Mask Confidence"/>
+                <RadioButton Style="{StaticResource MaterialDesignTabRadioButton}" x:Name="rbTab4" Margin="4" Content="SCBA Fit Test"/>
+                <RadioButton Style="{StaticResource MaterialDesignTabRadioButton}" x:Name="rbTab5" Margin="4" Content="P. S. S."/>
+            </WrapPanel>
+        </materialDesign:ColorZone>
+        <UserControl x:Name="DepartmentRefresher" Grid.Row="1"
+                                 Visibility="{Binding IsChecked, ElementName=rbTab1, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+        <UserControl x:Name="HazMatRefresher" Grid.Row="1"
+                                 Visibility="{Binding IsChecked, ElementName=rbTab2, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+        <UserControl x:Name="MaskConfidence" Grid.Row="1"
+                                 Visibility="{Binding IsChecked, ElementName=rbTab3, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+        <UserControl x:Name="FitTest" Grid.Row="1"
+                                 Visibility="{Binding IsChecked, ElementName=rbTab4, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+        <UserControl x:Name="PSS" Grid.Row="1"
+                                 Visibility="{Binding IsChecked, ElementName=rbTab5, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+    </Grid>
+</UserControl>

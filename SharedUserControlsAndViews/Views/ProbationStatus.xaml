@@ -1,0 +1,63 @@
+﻿<Window x:Class="WFDMemberStatus.UserControlsAndViews.ProbationStatus"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WFDMemberStatus.UserControlsAndViews"
+        mc:Ignorable="d"
+        Title="Probationary Member Status" Height="850" Width="1000">
+    <Window.Resources>
+        <DataTemplate x:Key="HeaderTemplateArrowUp">
+            <DockPanel>
+                <TextBlock HorizontalAlignment="Center" Text="{Binding}"/>
+                <Path VerticalAlignment="Center" Fill="Black" Data="M 5,5 15,5 10,0 5,5"/>
+            </DockPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="HeaderTemplateArrowDown">
+            <DockPanel>
+                <TextBlock HorizontalAlignment="Center" Text="{Binding}"/>
+                <Path VerticalAlignment="Center" Fill="Black" Data="M 5,0 10,5 15,0 5,0"/>
+            </DockPanel>
+        </DataTemplate>
+    </Window.Resources>
+    <Grid>
+        <!--Main Grid-->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <!--Member Selection List-->
+            <ColumnDefinition Width="*" />
+            <!--Member Detail-->
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Vertical" Grid.Row="0">
+                <Button Content="Print Selected Member" Click="PrintMemberClicked"/>
+                <Button Content="Print All" Click="PrintAllMembersClicked"/>
+                <TextBlock TextAlignment="Center">Filters</TextBlock>
+                <StackPanel x:Name="FilterPanel" Orientation="Horizontal">
+                    <RadioButton Content="All" GroupName="rbgCompany" Tag="All" Checked="CompanyFilterChecked" IsChecked="True" Margin="5,0,0,0"/>
+                    <RadioButton Content="H &amp; L" GroupName="rbgCompany" Tag="H&amp;L #1" Checked="CompanyFilterChecked" Margin="5,0,0,0"/>
+                    <RadioButton Content="Hose 1" GroupName="rbgCompany" Tag="HOSE #1" Checked="CompanyFilterChecked" Margin="5,0,0,0"/>
+                    <RadioButton Content="Hose 2" GroupName="rbgCompany" Tag="HOSE #2" Checked="CompanyFilterChecked" Margin="5,0,0,0"/>
+                </StackPanel>
+            </StackPanel>
+            <DataGrid Grid.Row="1" x:Name="memberListView" AutoGenerateColumns="False" SelectionChanged="ChangedMember"
+                      VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" IsReadOnly="True">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Company" Binding="{Binding Company}"/>
+                    <DataGridTextColumn Header="Badge" Binding="{Binding Badge}"/>
+                    <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}"/>
+                    <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+
+        <Grid Grid.Column="1">
+            <!--Right Side Panel-->
+            <local:IndividualProbationStatus/>
+        </Grid>
+    </Grid>
+</Window>

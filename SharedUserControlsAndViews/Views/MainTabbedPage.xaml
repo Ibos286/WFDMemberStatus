@@ -1,0 +1,79 @@
+﻿<Window x:Class="WFDMemberStatus.UserControlsAndViews.MainTabbedPage"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WFDMemberStatus.UserControlsAndViews"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="12"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Title="Westbury Fire Department - Member Status">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/UserControlsAndViews;component/ResourceDictionary.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.LightBlue.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Blue.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
+    </Window.Resources>
+    <Grid>
+        <TabControl>
+            <TabItem x:Name="NotificationsTab">
+                <TabItem.Header>
+                    <TextBlock Margin="5" Style="{StaticResource MaterialDesignBody1TextBlock}">Notifications</TextBlock>
+                </TabItem.Header>
+            </TabItem>
+            <TabItem x:Name="MemberStatusTab">
+                <TabItem.Header>
+                    <TextBlock Margin="5" Style="{StaticResource MaterialDesignBody1TextBlock}">Member Status</TextBlock>
+                </TabItem.Header>
+            </TabItem>
+            <TabItem x:Name="ProbationStatusTab">
+                <TabItem.Header>
+                    <TextBlock Margin="5" Style="{StaticResource MaterialDesignBody1TextBlock}">Probationary Member Status</TextBlock>
+                </TabItem.Header>
+            </TabItem>
+            <TabItem x:Name="MembersNeedingTab">
+                <TabItem.Header>
+                    <TextBlock Margin="5" Style="{StaticResource MaterialDesignBody1TextBlock}">Members Needing...</TextBlock>
+                </TabItem.Header>
+                <TabControl Margin="10">
+                    <TabItem x:Name="MembersNeedingRefresher">
+                        <TabItem.Header>
+                            <TextBlock Margin="2" Style="{StaticResource MaterialDesignBody1TextBlock}">Department Refresher</TextBlock>
+                        </TabItem.Header>
+                    </TabItem>
+                    <TabItem x:Name="MembersNeedingHazMatRefresher">
+                        <TabItem.Header>
+                            <TextBlock Margin="2" Style="{StaticResource MaterialDesignBody2TextBlock}">HazMat Refresher</TextBlock>
+                        </TabItem.Header>
+                    </TabItem>
+                    <TabItem x:Name="MembersNeedingMaskConfidence">
+                        <TabItem.Header>
+                            <TextBlock Margin="2" Style="{StaticResource MaterialDesignBody2TextBlock}">Mask Confidence</TextBlock>
+                        </TabItem.Header>
+                    </TabItem>
+                    <TabItem x:Name="MembersNeedingFitTest">
+                        <TabItem.Header>
+                            <TextBlock Margin="2" Style="{StaticResource MaterialDesignBody2TextBlock}">Fit Test</TextBlock>
+                        </TabItem.Header>
+                    </TabItem>
+                    <TabItem x:Name="MembersNeedingPSS">
+                        <TabItem.Header>
+                            <TextBlock Margin="2" Style="{StaticResource MaterialDesignBody2TextBlock}">P. S. S.</TextBlock>
+                        </TabItem.Header>
+                    </TabItem>
+                </TabControl>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

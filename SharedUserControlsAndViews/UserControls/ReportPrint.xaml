@@ -1,0 +1,19 @@
+﻿<UserControl x:Class="WFDMemberStatus.UserControlsAndViews.ReportPrint"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WFDMemberStatus.UserControlsAndViews"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid x:Name="MainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Top" 
+                   TextAlignment="Center" FontSize="32">Westbury Fire Department</TextBlock>
+        <Separator Grid.Row="0" VerticalAlignment="Bottom"/>
+        <!--<local:MembersNeedingRefresher Grid.Row="1"/>-->
+    </Grid>
+</UserControl>

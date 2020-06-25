@@ -1,0 +1,28 @@
+﻿<Window x:Class="WFDMemberStatus.UserControlsAndViews.ListReportView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WFDMemberStatus.UserControlsAndViews"
+        xmlns:converters="clr-namespace:WFDMemberStatus.SharedConverters;assembly=SharedConverters"
+        xmlns:userControls="clr-namespace:WFDMemberStatus.UserControlsAndViews"
+        mc:Ignorable="d"
+        Title="Refresher Required Member List" Height="450" Width="1000">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/UserControlsAndViews;component/RoundCornerButton.xaml"/>
+                <ResourceDictionary Source="/UserControlsAndViews;component/RadioButtonTemplate.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid x:Name="MainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Button Grid.Row="1"
+                Style="{DynamicResource RoundCornerButton}"
+                HorizontalAlignment="Center" Content="Print List" Click="PrintListClicked"/>
+    </Grid>
+</Window>

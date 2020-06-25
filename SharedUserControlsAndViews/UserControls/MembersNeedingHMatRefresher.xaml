@@ -1,0 +1,32 @@
+﻿<UserControl x:Class="WFDMemberStatus.UserControlsAndViews.MembersNeedingHMatRefresher"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WFDMemberStatus.UserControlsAndViews"
+             xmlns:converters="clr-namespace:WFDMemberStatus.SharedConverters;assembly=SharedConverters"
+             mc:Ignorable="d" >
+    <UserControl.Resources>
+        <converters:DateConverter x:Key="dateConverter"/>
+        <Style x:Key="VerticalBar" TargetType="{x:Type Separator}" BasedOn="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}">
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" HorizontalAlignment="Center">Members That Need HazMat Refresher</TextBlock>
+        <DataGrid Grid.Row="1" x:Name="hazMatDataGrid" AutoGenerateColumns="False" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Company" Binding="{Binding Company}"/>
+                <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}"/>
+                <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}"/>
+                <DataGridTextColumn Header="Phone Number (H)" Binding="{Binding PhoneNumber}"/>
+                <DataGridTextColumn Header="Phone Number (C)" Binding="{Binding CellPhone}"/>
+                <DataGridTextColumn Header="Email Address" Binding="{Binding EmailAddress}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

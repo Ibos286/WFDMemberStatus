@@ -1,0 +1,443 @@
+﻿<UserControl x:Class="WFDMemberStatus.UserControlsAndViews.IndividualProbationStatus"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:converters="clr-namespace:WFDMemberStatus.SharedConverters;assembly=SharedConverters"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+            TextElement.FontWeight="Regular"
+            TextElement.FontSize="13"
+            TextOptions.TextFormattingMode="Ideal"
+            TextOptions.TextRenderingMode="Auto"
+            Background="{DynamicResource MaterialDesignPaper}"
+            FontFamily="{DynamicResource MaterialDesignFont}"
+             mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.LightBlue.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Blue.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <BorderGapMaskConverter x:Key="BorderGapMaskConverter"/>
+            <converters:DateConverter x:Key="dateConverter"/>
+            <converters:ProbationPercentageColorConverter x:Key="percentageColorConverter"/>
+            <Style x:Key="VerticalBar" TargetType="{x:Type Separator}" BasedOn="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}">
+                <Setter Property="HorizontalAlignment" Value="Right"/>
+            </Style>
+            <Style x:Key="{x:Type TextBlock}" TargetType="{x:Type TextBlock}">
+                <Setter Property="Margin" Value="0 2 0 2"/>
+                <Style.Triggers>
+                    <Trigger Property="Text" Value="Absent">
+                        <Setter Property="Foreground" Value="Red"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0" Orientation="Vertical">
+                <TextBlock x:Name="ContainerTitle1" FontSize="24" TextAlignment="Center">Westbury Fire Department</TextBlock>
+                <TextBlock x:Name="ContainerTitle2" FontSize="18" TextAlignment="Center">Probationary Member Status</TextBlock>
+            </StackPanel>
+
+            <GroupBox Margin="5" Grid.Row="1"
+                      Style="{DynamicResource MaterialDesignCardGroupBox}" materialDesign:ShadowAssist.ShadowDepth="Depth2">
+                <GroupBox.Header>
+                    <TextBlock FontSize="16">Member Information</TextBlock>
+                </GroupBox.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Company}"/>
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding Badge}"/>
+                    <Separator Style="{StaticResource VerticalBar}" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2"/>
+                    <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding LastName}"/>
+                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding FirstName}"/>
+                    <Separator Grid.Row="0" Grid.Column="1" Grid.RowSpan="3" HorizontalAlignment="Right" Style="{StaticResource VerticalBar}"/>
+                    <StackPanel Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Orientation="Horizontal">
+                        <TextBlock Text="(H):"/>
+                        <TextBlock Text="{Binding PhoneNumber}"/>
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Orientation="Horizontal">
+                        <TextBlock Text="(C):"/>
+                        <TextBlock Text="{Binding CellPhone}"/>
+                    </StackPanel>
+                    <Separator Grid.Row="0" Grid.Column="4" Grid.RowSpan="2" HorizontalAlignment="Left" Style="{StaticResource VerticalBar}"/>
+                    <StackPanel Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" Orientation="Horizontal">
+                        <TextBlock Text="Service Date:" Padding="0,0,3,0"/>
+                        <TextBlock Text="{Binding ServiceDate, StringFormat=d, Converter={StaticResource dateConverter}}"/>
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" Orientation="Horizontal">
+                        <TextBlock Text="Time Of Service:" Padding="0,0,3,0"/>
+                        <TextBlock Text="{Binding TimeOfService}"/>
+                    </StackPanel>
+                    <Separator Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" VerticalAlignment="Bottom"/>
+                    <Separator Grid.Row="2" Grid.Column="3" Grid.RowSpan="2" HorizontalAlignment="Right" Style="{StaticResource VerticalBar}"/>
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Shield Color:"/>
+                    <TextBlock Grid.Row="2" Grid.Column="2" Text="PSS Issued:"/>
+                    <TextBlock Grid.Row="2" Grid.Column="4" TextAlignment="Left" Text="Probation Start:"/>
+                    <TextBlock Grid.Row="2" Grid.Column="5" Text="{Binding ProbationStartDate, StringFormat=d, Converter={StaticResource dateConverter}}"/>
+
+                </Grid>
+            </GroupBox>
+
+            <GroupBox Margin="5" Grid.Row="2"
+                      Style="{DynamicResource MaterialDesignCardGroupBox}" materialDesign:ShadowAssist.ShadowDepth="Depth2">
+                <GroupBox.Header>
+                    <TextBlock FontSize="16">Training Information</TextBlock>
+                </GroupBox.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+                    <GroupBox Grid.Column="0" Margin="2" Style="{DynamicResource MaterialDesignCardGroupBox}">
+                        <GroupBox.Header>
+                            <TextBlock FontSize="14">Department Training</TextBlock>
+                        </GroupBox.Header>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Grid.Row="0" Text="CPR:"/>
+                            <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding ProbationTrainingList.CPR, StringFormat=d, Converter={StaticResource dateConverter}}"/>
+                            <TextBlock Grid.Column="0" Grid.Row="1">Flash Hood<LineBreak/>Video:</TextBlock>
+                            <TextBlock Grid.Column="1" Grid.Row="1" VerticalAlignment="Center"
+                                       Text="{Binding ProbationTrainingList.FlashHood, StringFormat=d, Converter={StaticResource dateConverter}}"/>
+                            <TextBlock Grid.Column="0" Grid.Row="2" Text="Orientation:"/>
+                            <TextBlock Grid.Column="1" Grid.Row="2" VerticalAlignment="Center"
+                                       Text="{Binding ProbationTrainingList.Orientation, StringFormat=d, Converter={StaticResource dateConverter}}"/>
+                            <TextBlock Grid.Column="0" Grid.Row="3" Text="SCBA Fit Test:"/>
+                            <TextBlock Grid.Column="1" Grid.Row="3" VerticalAlignment="Center"
+                                       Text="{Binding ProbationTrainingList.SCBAFitTest, StringFormat=d, Converter={StaticResource dateConverter}}"/>
+                            <TextBlock Grid.Column="0" Grid.Row="4">SCBA Mask <LineBreak/> Confidence:</TextBlock>
+                            <TextBlock Grid.Column="1" Grid.Row="4" VerticalAlignment="Center"
+                                       Text="{Binding ProbationTrainingList.SCBAConfidence, StringFormat=d, Converter={StaticResource dateConverter}}"/>
+                            <Separator VerticalAlignment="Bottom" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"/>
+                            <Separator VerticalAlignment="Bottom" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2"/>
+                            <Separator VerticalAlignment="Bottom" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2"/>
+                            <Separator VerticalAlignment="Bottom" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2"/>
+                            <Separator VerticalAlignment="Bottom" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2"/>
+                        </Grid>
+                    </GroupBox>
+                    <GroupBox Grid.Column="1" Margin="2" Style="{DynamicResource MaterialDesignCardGroupBox}">
+                        <GroupBox.Header>
+                            <TextBlock FontSize="14">FSA / State Training</TextBlock>
+                        </GroupBox.Header>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Grid.Row="0">Essentials of<LineBreak/>Firefighting:</TextBlock>
+                            <TextBlock Grid.Column="1" Grid.Row="0" VerticalAlignment="Center"
+                                       Text="{Binding ProbationTrainingList.Essentials, StringFormat=d, Converter={StaticResource dateConverter}}"/>
+                            <TextBlock Grid.Column="0" Grid.Row="1" Text="Firefighter I:"/>
+                            <TextBlock Grid.Column="1" Grid.Row="1" VerticalAlignment="Center"
+                                       Text="{Binding ProbationTrainingList.FirefighterI, StringFormat=d, Converter={StaticResource dateConverter}}"/>
+                            <TextBlock Grid.Column="0" Grid.Row="2">Primary<LineBreak/>Training:</TextBlock>
+                            <TextBlock Grid.Column="1" Grid.Row="2" VerticalAlignment="Center"
+                                       Text="{Binding ProbationTrainingList.PrimaryTraining, StringFormat=d, Converter={StaticResource dateConverter}}"/>
+                            <Separator VerticalAlignment="Bottom" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"/>
+                            <Separator VerticalAlignment="Bottom" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2"/>
+                            <Separator VerticalAlignment="Bottom" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2"/>
+                        </Grid>
+                    </GroupBox>
+                    <GroupBox Grid.Column="2" Margin="2" Style="{DynamicResource MaterialDesignCardGroupBox}">
+                        <GroupBox.Header>
+                            <TextBlock FontSize="14">FEMA</TextBlock>
+                        </GroupBox.Header>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Grid.Row="0" Text="NIMS 100:"/>
+                            <TextBlock Grid.Column="1" Grid.Row="0" VerticalAlignment="Center"
+                                       Text="{Binding ProbationTrainingList.NIMS100, StringFormat=d, Converter={StaticResource dateConverter}}"/>
+                            <TextBlock Grid.Column="0" Grid.Row="1" Text="NIMS 200:"/>
+                            <TextBlock Grid.Column="1" Grid.Row="1" VerticalAlignment="Center"
+                                       Text="{Binding ProbationTrainingList.NIMS200, StringFormat=d, Converter={StaticResource dateConverter}}"/>
+                            <TextBlock Grid.Column="0" Grid.Row="2" Text="NIMS 700:"/>
+                            <TextBlock Grid.Column="1" Grid.Row="2" VerticalAlignment="Center"
+                                       Text="{Binding ProbationTrainingList.NIMS700, StringFormat=d, Converter={StaticResource dateConverter}}"/>
+                            <TextBlock Grid.Column="0" Grid.Row="3" Text="NIMS 800:"/>
+                            <TextBlock Grid.Column="1" Grid.Row="3" VerticalAlignment="Center"
+                                       Text="{Binding ProbationTrainingList.NIMS800, StringFormat=d, Converter={StaticResource dateConverter}}"/>
+                            <Separator VerticalAlignment="Bottom" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"/>
+                            <Separator VerticalAlignment="Bottom" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2"/>
+                            <Separator VerticalAlignment="Bottom" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2"/>
+                            <Separator VerticalAlignment="Bottom" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2"/>
+                        </Grid>
+                    </GroupBox>
+                </Grid>
+            </GroupBox>
+            <GroupBox Margin="5" Grid.Row="3"
+                      Style="{DynamicResource MaterialDesignCardGroupBox}" materialDesign:ShadowAssist.ShadowDepth="Depth2">
+                <GroupBox.Header>
+                    <TextBlock FontSize="16">Probation Drills</TextBlock>
+                </GroupBox.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" Text="January"/>
+                    <TextBlock Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" Text="February"/>
+                    <TextBlock Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" Text="March"/>
+                    <TextBlock Grid.Column="3" Grid.Row="0" HorizontalAlignment="Center" Text="April"/>
+                    <TextBlock Grid.Column="4" Grid.Row="0" HorizontalAlignment="Center" Text="May"/>
+                    <TextBlock Grid.Column="5" Grid.Row="0" HorizontalAlignment="Center" Text="June"/>
+                    <TextBlock Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" Text="{Binding ProbationDrill.JanDrill, StringFormat=d, Converter={StaticResource dateConverter}}"/>
+                    <TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" Text="{Binding ProbationDrill.FebDrill, StringFormat=d, Converter={StaticResource dateConverter}}"/>
+                    <TextBlock Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center" Text="{Binding ProbationDrill.MarDrill, StringFormat=d, Converter={StaticResource dateConverter}}"/>
+                    <TextBlock Grid.Column="3" Grid.Row="1" HorizontalAlignment="Center" Text="{Binding ProbationDrill.AprDrill, StringFormat=d, Converter={StaticResource dateConverter}}"/>
+                    <TextBlock Grid.Column="4" Grid.Row="1" HorizontalAlignment="Center" Text="{Binding ProbationDrill.MayDrill, StringFormat=d, Converter={StaticResource dateConverter}}"/>
+                    <TextBlock Grid.Column="5" Grid.Row="1" HorizontalAlignment="Center" Text="{Binding ProbationDrill.JunDrill, StringFormat=d, Converter={StaticResource dateConverter}}"/>
+                    <TextBlock Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" Text="July"/>
+                    <Separator Grid.Column="0" Grid.Row="2" VerticalAlignment="Top"/>
+                    <TextBlock Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" Text="August"/>
+                    <Separator Grid.Column="1" Grid.Row="2" VerticalAlignment="Top"/>
+                    <TextBlock Grid.Column="2" Grid.Row="2" HorizontalAlignment="Center" Text="September"/>
+                    <Separator Grid.Column="2" Grid.Row="2" VerticalAlignment="Top"/>
+                    <TextBlock Grid.Column="3" Grid.Row="2" HorizontalAlignment="Center" Text="October"/>
+                    <Separator Grid.Column="3" Grid.Row="2" VerticalAlignment="Top"/>
+                    <TextBlock Grid.Column="4" Grid.Row="2" HorizontalAlignment="Center" Text="November"/>
+                    <Separator Grid.Column="4" Grid.Row="2" VerticalAlignment="Top"/>
+                    <TextBlock Grid.Column="5" Grid.Row="2" HorizontalAlignment="Center" Text="December"/>
+                    <Separator Grid.Column="5" Grid.Row="2" VerticalAlignment="Top"/>
+                    <TextBlock Grid.Column="0" Grid.Row="3" HorizontalAlignment="Center" Text="{Binding ProbationDrill.JulDrill, StringFormat=d, Converter={StaticResource dateConverter}}"/>
+                    <TextBlock Grid.Column="1" Grid.Row="3" HorizontalAlignment="Center" Text="{Binding ProbationDrill.AugDrill, StringFormat=d, Converter={StaticResource dateConverter}}"/>
+                    <TextBlock Grid.Column="2" Grid.Row="3" HorizontalAlignment="Center" Text="{Binding ProbationDrill.SepDrill, StringFormat=d, Converter={StaticResource dateConverter}}"/>
+                    <TextBlock Grid.Column="3" Grid.Row="3" HorizontalAlignment="Center" Text="{Binding ProbationDrill.OctDrill, StringFormat=d, Converter={StaticResource dateConverter}}"/>
+                    <TextBlock Grid.Column="4" Grid.Row="3" HorizontalAlignment="Center" Text="{Binding ProbationDrill.NovDrill, StringFormat=d, Converter={StaticResource dateConverter}}"/>
+                    <TextBlock Grid.Column="5" Grid.Row="3" HorizontalAlignment="Center" Text="{Binding ProbationDrill.DecDrill, StringFormat=d, Converter={StaticResource dateConverter}}"/>
+                    <Separator Grid.Column="0" Grid.Row="0" Grid.RowSpan="4" Style="{StaticResource VerticalBar}"/>
+                    <Separator Grid.Column="1" Grid.Row="0" Grid.RowSpan="4" Style="{StaticResource VerticalBar}"/>
+                    <Separator Grid.Column="2" Grid.Row="0" Grid.RowSpan="4" Style="{StaticResource VerticalBar}"/>
+                    <Separator Grid.Column="3" Grid.Row="0" Grid.RowSpan="4" Style="{StaticResource VerticalBar}"/>
+                    <Separator Grid.Column="4" Grid.Row="0" Grid.RowSpan="4" Style="{StaticResource VerticalBar}"/>
+
+                </Grid>
+            </GroupBox>
+            <GroupBox Margin="5" Grid.Row="4"
+                      Style="{DynamicResource MaterialDesignCardGroupBox}" materialDesign:ShadowAssist.ShadowDepth="Depth2">
+                <GroupBox.Header>
+                    <TextBlock FontSize="16">Percentages</TextBlock>
+                </GroupBox.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+                    <GroupBox Grid.Column="0" Style="{DynamicResource MaterialDesignCardGroupBox}">
+                        <GroupBox.Header>
+                            <TextBlock FontSize="14">Alarms</TextBlock>
+                        </GroupBox.Header>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Row="0" Grid.Column="0">Fire Day:</TextBlock>
+                            <TextBlock Grid.Row="0" Grid.Column="1" VerticalAlignment="Center"
+                                       Text="{Binding ProbationPercentage.FireDay}" TextAlignment="Center"/>
+                            <Separator Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Bottom"/>
+                            <TextBlock Grid.Row="1" Grid.Column="0">Fire Night:</TextBlock>
+                            <TextBlock Grid.Row="1" Grid.Column="1" VerticalAlignment="Center"
+                                       Text="{Binding ProbationPercentage.FireNight}" TextAlignment="Center"/>
+                            <Separator Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Bottom"/>
+                            <TextBlock Grid.Row="2" Grid.Column="0">Rescue Day:</TextBlock>
+                            <TextBlock Grid.Row="2" Grid.Column="1" VerticalAlignment="Center"
+                                       Text="{Binding ProbationPercentage.RescueDay}" TextAlignment="Center"/>
+                            <Separator Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Bottom"/>
+                            <TextBlock Grid.Row="3" Grid.Column="0">Rescue Night:</TextBlock>
+                            <TextBlock Grid.Row="3" Grid.Column="1" VerticalAlignment="Center"
+                                       Text="{Binding ProbationPercentage.RescueNight}" TextAlignment="Center"/>
+                            <Separator Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Bottom"/>
+                            <TextBlock Grid.Row="4" Grid.Column="0">Auto Accident:</TextBlock>
+                            <TextBlock Grid.Row="4" Grid.Column="1" VerticalAlignment="Center"
+                                       Text="{Binding ProbationPercentage.AutoAcc}" TextAlignment="Center"/>
+                            <Separator Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Bottom"/>
+                        </Grid>
+                    </GroupBox>
+
+                    <GroupBox Margin="2" Grid.Column="1" Style="{DynamicResource MaterialDesignCardGroupBox}">
+                        <GroupBox.Header>
+                            <TextBlock FontSize="14">Department</TextBlock>
+                        </GroupBox.Header>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Grid.Column="0">Drills:</TextBlock>
+                            <TextBlock Grid.Row="0" Grid.Column="1" VerticalAlignment="Center"
+                                       TextAlignment="Center" Text="{Binding ProbationPercentage.DrillDpt}"/>
+                            <Separator Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Bottom"/>
+                            <TextBlock Grid.Row="1" Grid.Column="0">Meetings:</TextBlock>
+                            <TextBlock Grid.Row="1" Grid.Column="1" VerticalAlignment="Center"
+                                       TextAlignment="Center" Text="{Binding ProbationPercentage.MeetDpt}"/>
+                            <Separator Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Bottom"/>
+                            <TextBlock Grid.Row="2" Grid.Column="0">Training:</TextBlock>
+                            <TextBlock Grid.Row="2" Grid.Column="1" TextAlignment="Center" VerticalAlignment="Center"
+                                       Text="{Binding ProbationPercentage.TrainDpt}"/>
+                            <Separator Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Bottom"/>
+                        </Grid>
+                    </GroupBox>
+
+                    <GroupBox Margin="2" Grid.Column="2" Style="{DynamicResource MaterialDesignCardGroupBox}">
+                        <GroupBox.Header>
+                            <TextBlock FontSize="14">Company</TextBlock>
+                        </GroupBox.Header>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Grid.Column="0">Miscellaneous:</TextBlock>
+                            <TextBlock Grid.Row="0" Grid.Column="1" TextAlignment="Center" VerticalAlignment="Center"
+                                       Text="{Binding ProbationPercentage.MiscCom}"/>
+                            <Separator Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Bottom"/>
+                            <TextBlock Grid.Row="1" Grid.Column="0">Drills:</TextBlock>
+                            <TextBlock Grid.Row="1" Grid.Column="1" TextAlignment="Center" VerticalAlignment="Center"
+                                       Text="{Binding ProbationPercentage.DrillCom}"/>
+                            <Separator Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Bottom"/>
+                            <TextBlock Grid.Row="2" Grid.Column="0">Meetings:</TextBlock>
+                            <TextBlock Grid.Row="2" Grid.Column="1" TextAlignment="Center" VerticalAlignment="Center"
+                                       Text="{Binding ProbationPercentage.MeetCom}"/>
+                            <Separator Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Bottom"/>
+                            <TextBlock Grid.Row="3" Grid.Column="0">Training:</TextBlock>
+                            <TextBlock Grid.Row="3" Grid.Column="1" TextAlignment="Center" VerticalAlignment="Center"
+                                       Text="{Binding ProbationPercentage.TrainCom}"/>
+                            <Separator Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Bottom"/>
+                        </Grid>
+                    </GroupBox>
+
+                    <GroupBox Margin="2" Grid.Column="3" Style="{DynamicResource MaterialDesignCardGroupBox}">
+                        <GroupBox.Header>
+                            <TextBlock FontSize="14">Totals</TextBlock>
+                        </GroupBox.Header>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Grid.Column="0">Alarms:</TextBlock>
+                            <TextBlock Grid.Row="0" Grid.Column="1" TextAlignment="Center" VerticalAlignment="Center"
+                                       Text="{Binding ProbationPercentage.Total}"/>
+                            <Separator Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Bottom"/>
+                            <TextBlock Grid.Row="1" Grid.Column="0">Silent:</TextBlock>
+                            <TextBlock Grid.Row="1" Grid.Column="1" TextAlignment="Center" VerticalAlignment="Center"
+                                       Text="{Binding ProbationPercentage.Silent}"/>
+                            <Separator Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Bottom"/>
+                            <TextBlock Grid.Row="2" Grid.Column="0">Current Month:</TextBlock>
+                            <TextBlock Grid.Row="2" Grid.Column="1" TextAlignment="Center" VerticalAlignment="Center"
+                                       Text="{Binding ProbationPercentage.CurMonth, StringFormat='\{0\}%'}"/>
+                            <Separator Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Bottom"/>
+                            <TextBlock Grid.Row="3" Grid.Column="0">Current Month<LineBreak/>With Silents:</TextBlock>
+                            <TextBlock Grid.Row="3" Grid.Column="1" TextAlignment="Center" Foreground="{Binding ProbationPercentage.CurMonthWithSilents, 
+                            Converter={StaticResource percentageColorConverter}}" VerticalAlignment="Center"
+                                       Text="{Binding ProbationPercentage.CurMonthWithSilents, StringFormat='\{0\}%'}"/>
+                            <Separator Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Bottom"/>
+                            <TextBlock Grid.Row="4" Grid.Column="0">Year To Date:</TextBlock>
+                            <TextBlock Grid.Row="4" Grid.Column="1" TextAlignment="Center" VerticalAlignment="Center"
+                                       Text="{Binding ProbationPercentage.YTD, StringFormat='\{0\}%'}"/>
+                            <Separator Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Bottom"/>
+                            <TextBlock Grid.Row="5" Grid.Column="0">Year To Date<LineBreak/>With Silents:</TextBlock>
+                            <TextBlock Grid.Row="5" Grid.Column="1" TextAlignment="Center" Foreground="{Binding ProbationPercentage.YTDWithSilents,
+                            Converter={StaticResource percentageColorConverter}}" VerticalAlignment="Center"
+                                       Text="{Binding ProbationPercentage.YTDWithSilents, StringFormat='\{0\}%'}" />
+                            <Separator Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Bottom"/>
+                        </Grid>
+                    </GroupBox>
+                </Grid>
+            </GroupBox>
+        </Grid>
+    </ScrollViewer>
+</UserControl>

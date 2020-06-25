@@ -1,0 +1,401 @@
+﻿<UserControl x:Class="WFDMemberStatus.UserControlsAndViews.IndividualMember"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:converters="clr-namespace:WFDMemberStatus.SharedConverters;assembly=SharedConverters"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:local="clr-namespace:WFDMemberStatus.UserControlsAndViews"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+             mc:Ignorable="d" 
+             d:DesignHeight="1200" d:DesignWidth="900">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.LightBlue.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Blue.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <BorderGapMaskConverter x:Key="BorderGapMaskConverter"/>
+            <converters:IncompleteToRed x:Key="incompleteToRed"/>
+            <converters:MarkTrainingIncomplete x:Key="markTrainingIncomplete"/>
+            <converters:DateConverter x:Key="dateConverter"/>
+            <converters:MemberPercentageColorConverter x:Key="percentageColorConverter"/>
+            <converters:CollapsableTextBox x:Key="collapsableTextBox"/>
+            <Style x:Key="VerticalBar" TargetType="{x:Type Separator}" BasedOn="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}">
+                <Setter Property="HorizontalAlignment" Value="Right"/>
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Orientation="Vertical">
+                <TextBlock x:Name="ContainerTitle1" Style="{StaticResource MaterialDesignHeadline4TextBlock}" TextAlignment="Center">Westbury Fire Department</TextBlock>
+                <TextBlock x:Name="ContainerTitle2" Style="{StaticResource MaterialDesignHeadline5TextBlock}" TextAlignment="Center">Member Status</TextBlock>
+            </StackPanel>
+            <GroupBox Margin="5" Grid.Row="1" 
+                      Style="{DynamicResource MaterialDesignCardGroupBox}" materialDesign:ShadowAssist.ShadowDepth="Depth2">
+                <GroupBox.Header>
+                    <TextBlock Style="{StaticResource MaterialDesignSubtitle1TextBlock}">Member Information</TextBlock>
+                </GroupBox.Header>
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    
+                    <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding Company}"/>
+                    <TextBlock Grid.Column="0" Grid.Row="1">
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{}{0} {1} {2}">
+                                <Binding Path="DepartmentOffice"/>
+                                <Binding Path="FirstName"/>
+                                <Binding Path="LastName"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                    <TextBlock Grid.Column="0" Grid.Row="2" Text="{Binding Badge}"/>
+                    <Separator Style="{StaticResource VerticalBar}" Grid.Row="0" Grid.Column="0" Grid.RowSpan="3"/>
+                    <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding Address}"/>
+                    <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Address2}" Visibility="{Binding Address2, Converter={StaticResource collapsableTextBox}}"/>
+                    <TextBlock Grid.Column="1" Grid.Row="2">
+                <Run Text="{Binding City}"/>
+                <Run Text=", "/>
+                <Run Text="{Binding State}"/>
+                <Run Text="   "/>
+                <Run Text="{Binding ZipCode}"/>
+                    </TextBlock>
+                    <Separator Style="{StaticResource VerticalBar}" Grid.Row="0" Grid.Column="1" Grid.RowSpan="3"/>
+                    <TextBlock Grid.Column="2" Grid.Row="0" TextAlignment="Left">
+                <Run Text="(H): "/>
+                <Run Text="{Binding PhoneNumber}"/>
+                    </TextBlock>
+                    <TextBlock Grid.Column="2" Grid.Row="1" TextAlignment="Left">
+                <Run Text="(C): "/>
+                <Run Text="{Binding CellPhone}"/>
+                    </TextBlock>
+                    <TextBlock Grid.Column="2" Grid.Row="2" Text="{Binding EmailAddress}"/>
+                    <Separator Style="{StaticResource VerticalBar}" Grid.Row="0" Grid.Column="2" Grid.RowSpan="3"/>
+                    <TextBlock Grid.Column="3" Grid.Row="0" Text="{Binding BirthDate, StringFormat='{}Birthday: {0:MM/dd/yyyy}',Converter={StaticResource dateConverter}}"
+                               TextAlignment="Left"/>
+                    <TextBlock Grid.Column="3" Grid.Row="1" TextAlignment="Left">
+                <Run Text="Service Date: "/>
+                <Run Text="{Binding ServiceDate, StringFormat=d, Converter={StaticResource dateConverter}}"/>
+                    </TextBlock>
+                    <TextBlock Grid.Column="3" Grid.Row="2" TextAlignment="Left">
+                <Run Text="Years Of Service: "/>
+                <Run Text="{Binding YearsOfService}"/>
+                    </TextBlock>
+                </Grid>
+            </GroupBox>
+            <GroupBox Margin="5" Grid.Row="2"
+                      Style="{DynamicResource MaterialDesignCardGroupBox}" materialDesign:ShadowAssist.ShadowDepth="Depth2">
+                <GroupBox.Header>
+                    <TextBlock Style="{StaticResource MaterialDesignSubtitle1TextBlock}">Department Information</TextBlock>
+                </GroupBox.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" TextAlignment="Left" Text="{Binding DepartmentClass, StringFormat='Department Class: {0}'}"/>
+                    <TextBlock Grid.Row="0" Grid.Column="1" TextAlignment="Left" Text="{Binding FSANumber, StringFormat='FSA Number: {0}'}"/>
+                    <TextBlock Grid.Row="0" Grid.Column="2" TextAlignment="Left" Text="{Binding FEMANumber, StringFormat='FEMA Number: {0}'}"/>
+                    <Separator Style="{StaticResource VerticalBar}" Grid.Row="0" Grid.Column="0"/>
+                    <Separator Style="{StaticResource VerticalBar}" Grid.Row="0" Grid.Column="1"/>
+                    <Separator Style="{StaticResource VerticalBar}" Grid.Row="0" Grid.Column="2"/>
+                    <Separator Grid.ColumnSpan="4" VerticalAlignment="Bottom"/>
+                    <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" Orientation="Horizontal">
+                        <TextBlock VerticalAlignment="Center">Apparatus Qualifications:</TextBlock>
+                        <ListBox ItemsSource="{Binding Qualifications}"
+                         ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel Margin="5 0 5 0" IsItemsHost="True"/>
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                        </ListBox>
+                    </StackPanel>
+                </Grid>
+            </GroupBox>
+            <GroupBox Margin="5" Grid.Row="3"
+                      Style="{DynamicResource MaterialDesignCardGroupBox}" materialDesign:ShadowAssist.ShadowDepth="Depth2">
+                <GroupBox.Header>
+                    <TextBlock Style="{StaticResource MaterialDesignSubtitle1TextBlock}">PESH Annual Training</TextBlock>
+                </GroupBox.Header>
+                <ListBox x:Name="PESHListBox" ItemsSource="{Binding PESHTrainings}"
+                             ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel IsItemsHost="True"/>
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border>
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock Text="{Binding TrainingName}" TextAlignment="Center" Margin="2,0,2,0" Padding="2,0,2,0"/>
+                                    <Separator VerticalAlignment="Bottom"/>
+                                    <TextBlock TextAlignment="Center" Padding="2,0,2,0"
+                                        Text="{Binding TrainingDate, StringFormat=d, Converter={StaticResource markTrainingIncomplete}}"
+                                               Foreground="{Binding TrainingDate, Converter={StaticResource incompleteToRed}}"/>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </GroupBox>
+            <GroupBox Margin="5" Grid.Row="4"
+                      Style="{DynamicResource MaterialDesignCardGroupBox}" materialDesign:ShadowAssist.ShadowDepth="Depth2">
+                <GroupBox.Header>
+                    <TextBlock Style="{StaticResource MaterialDesignSubtitle1TextBlock}">Required Department Training</TextBlock>
+                </GroupBox.Header>
+                <ListBox x:Name="DptListBox" ItemsSource="{Binding DepartmentTrainings}"
+                             ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel IsItemsHost="True"/>
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border>
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock Text="{Binding TrainingName}" TextAlignment="Center" Margin="2,0,2,0" Padding="2,0,2,0"/>
+                                    <Separator VerticalAlignment="Bottom"/>
+                                    <TextBlock TextAlignment="Center" Padding="2,0,2,0"
+                                        Text="{Binding TrainingDate, StringFormat=d, Converter={StaticResource markTrainingIncomplete}}"
+                                               Foreground="{Binding TrainingDate, Converter={StaticResource incompleteToRed}}"/>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </GroupBox>
+            <GroupBox Margin="5" Grid.Row="5"
+                      Style="{DynamicResource MaterialDesignCardGroupBox}" materialDesign:ShadowAssist.ShadowDepth="Depth2">
+                <GroupBox.Header>
+                    <TextBlock Style="{StaticResource MaterialDesignSubtitle1TextBlock}">Refresher Last 2 Years</TextBlock>
+                </GroupBox.Header>
+                <ListBox x:Name="RefresherListBox" ItemsSource="{Binding RefresherAttendance}"
+                             ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel IsItemsHost="True"/>
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderThickness="1">
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock Text="{Binding TrainingName}" TextAlignment="Center" Margin="2,0,2,0" Padding="2,0,2,0"/>
+                                    <Separator VerticalAlignment="Bottom"/>
+                                    <TextBlock TextAlignment="Center" Padding="2,0,2,0"
+                                        Text="{Binding TrainingDate, StringFormat=d, Converter={StaticResource markTrainingIncomplete}}"
+                                               Foreground="{Binding TrainingDate, Converter={StaticResource incompleteToRed}}"/>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </GroupBox>
+            <GroupBox Margin="5" Grid.Row="6"
+                      Style="{DynamicResource MaterialDesignCardGroupBox}" materialDesign:ShadowAssist.ShadowDepth="Depth2">
+                <GroupBox.Header>
+                    <TextBlock Style="{StaticResource MaterialDesignSubtitle1TextBlock}">Percentages</TextBlock>
+                </GroupBox.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+                    <GroupBox Grid.Column="0">
+                        <GroupBox.Header>
+                            <TextBlock Style="{StaticResource MaterialDesignBody1TextBlock}">Alarms</TextBlock>
+                        </GroupBox.Header>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Row="0" Grid.Column="0">Fire Day:</TextBlock>
+                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding CurrentPercentage.FireDay}"
+                                       VerticalAlignment="Center" Margin="0,0,0,5"
+                                       TextAlignment="Center"/>
+                            <Separator Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Bottom"/>
+                            <TextBlock Grid.Row="1" Grid.Column="0">Fire Night:</TextBlock>
+                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding CurrentPercentage.FireNight}"
+                                       VerticalAlignment="Center" Margin="0,0,0,5"
+                                       TextAlignment="Center"/>
+                            <Separator Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Bottom"/>
+                            <TextBlock Grid.Row="2" Grid.Column="0">Rescue Day:</TextBlock>
+                            <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding CurrentPercentage.RescueDay}"
+                                       VerticalAlignment="Center" Margin="0,0,0,5"
+                                       TextAlignment="Center"/>
+                            <Separator Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Bottom"/>
+                            <TextBlock Grid.Row="3" Grid.Column="0">Rescue Night:</TextBlock>
+                            <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding CurrentPercentage.RescueNight}"
+                                       VerticalAlignment="Center" Margin="0,0,0,5"
+                                       TextAlignment="Center"/>
+                            <Separator Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Bottom"/>
+                            <TextBlock Grid.Row="4" Grid.Column="0">Auto Accident:</TextBlock>
+                            <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding CurrentPercentage.AutoAcc}"
+                                       VerticalAlignment="Center" Margin="0,0,0,5"
+                                       TextAlignment="Center"/>
+                            <Separator Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Bottom"/>
+                        </Grid>
+                    </GroupBox>
+
+                    <GroupBox Grid.Column="1" Margin="2" Style="{DynamicResource MaterialDesignCardGroupBox}">
+                        <GroupBox.Header>
+                            <TextBlock Style="{StaticResource MaterialDesignBody1TextBlock}">Department</TextBlock>
+                        </GroupBox.Header>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Grid.Column="0">Drills:</TextBlock>
+                            <TextBlock Grid.Row="0" Grid.Column="1" TextAlignment="Center" Text="{Binding CurrentPercentage.DrillDpt}"
+                                       VerticalAlignment="Center" Margin="0,0,0,5"/>
+                            <Separator Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Bottom"/>
+                            <TextBlock Grid.Row="1" Grid.Column="0">Meetings:</TextBlock>
+                            <TextBlock Grid.Row="1" Grid.Column="1" TextAlignment="Center" Text="{Binding CurrentPercentage.MeetDpt}"
+                                       VerticalAlignment="Center" Margin="0,0,0,5"/>
+                            <Separator Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Bottom"/>
+                            <TextBlock Grid.Row="2" Grid.Column="0">Training:</TextBlock>
+                            <TextBlock Grid.Row="2" Grid.Column="1" TextAlignment="Center" Text="{Binding CurrentPercentage.TrainDpt}"
+                                       VerticalAlignment="Center" Margin="0,0,0,5"/>
+                            <Separator Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Bottom"/>
+                        </Grid>
+                    </GroupBox>
+
+                    <GroupBox Grid.Column="2" Margin="2" Style="{DynamicResource MaterialDesignCardGroupBox}">
+                        <GroupBox.Header>
+                            <TextBlock Style="{StaticResource MaterialDesignBody1TextBlock}">Company</TextBlock>
+                        </GroupBox.Header>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Grid.Column="0">Miscellaneous:</TextBlock>
+                            <TextBlock Grid.Row="0" Grid.Column="1" TextAlignment="Center" Text="{Binding CurrentPercentage.MiscCom}"
+                                       VerticalAlignment="Center" Margin="0,0,0,5"/>
+                            <Separator Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Bottom"/>
+                            <TextBlock Grid.Row="1" Grid.Column="0">Drills:</TextBlock>
+                            <TextBlock Grid.Row="1" Grid.Column="1" TextAlignment="Center" Text="{Binding CurrentPercentage.DrillCom}"
+                                       VerticalAlignment="Center" Margin="0,0,0,5"/>
+                            <Separator Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Bottom"/>
+                            <TextBlock Grid.Row="2" Grid.Column="0">Meetings:</TextBlock>
+                            <TextBlock Grid.Row="2" Grid.Column="1" TextAlignment="Center" Text="{Binding CurrentPercentage.MeetCom}"
+                                       VerticalAlignment="Center" Margin="0,0,0,5"/>
+                            <Separator Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Bottom"/>
+                            <TextBlock Grid.Row="3" Grid.Column="0">Training:</TextBlock>
+                            <TextBlock Grid.Row="3" Grid.Column="1" TextAlignment="Center" Text="{Binding CurrentPercentage.TrainCom}"
+                                       VerticalAlignment="Center" Margin="0,0,0,5"/>
+                            <Separator Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Bottom"/>
+                        </Grid>
+                    </GroupBox>
+
+                    <GroupBox Grid.Column="3" Margin="2" Style="{DynamicResource MaterialDesignCardGroupBox}">
+                        <GroupBox.Header>
+                            <TextBlock Style="{StaticResource MaterialDesignBody1TextBlock}">Totals</TextBlock>
+                        </GroupBox.Header>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Grid.Column="0">Alarms:</TextBlock>
+                            <TextBlock Grid.Row="0" Grid.Column="1" TextAlignment="Center" Text="{Binding CurrentPercentage.Total}"
+                                       VerticalAlignment="Center" Margin="0,0,0,5"/>
+                            <Separator Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Bottom"/>
+                            <TextBlock Grid.Row="1" Grid.Column="0">Silent:</TextBlock>
+                            <TextBlock Grid.Row="1" Grid.Column="1" TextAlignment="Center" Text="{Binding CurrentPercentage.Silent}"
+                                       VerticalAlignment="Center" Margin="0,0,0,5"/>
+                            <Separator Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Bottom"/>
+                            <TextBlock Grid.Row="2" Grid.Column="0">Current Month:</TextBlock>
+                            <TextBlock Grid.Row="2" Grid.Column="1" TextAlignment="Center" Text="{Binding CurrentPercentage.CurMonth, StringFormat='\{0\}%'}"
+                                       VerticalAlignment="Center" Margin="0,0,0,5"/>
+                            <Separator Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Bottom"/>
+                            <TextBlock Grid.Row="3" Grid.Column="0" Margin="0 0 0 5">Current Month<LineBreak/>With Silents:</TextBlock>
+                            <TextBlock Grid.Row="3" Grid.Column="1" TextAlignment="Center" Foreground="{Binding CurrentPercentage.CurMonthWithSilents, 
+                            Converter={StaticResource percentageColorConverter}}" Text="{Binding CurrentPercentage.CurMonthWithSilents, StringFormat='\{0\}%'}"
+                                       VerticalAlignment="Center" Margin="0,0,0,5"/>
+                            <Separator Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Bottom"/>
+                            <TextBlock Grid.Row="4" Grid.Column="0">Year To Date:</TextBlock>
+                            <TextBlock Grid.Row="4" Grid.Column="1" TextAlignment="Center" Text="{Binding CurrentPercentage.YTD, StringFormat='\{0\}%'}"
+                                       VerticalAlignment="Center" Margin="0,0,0,5"/>
+                            <Separator Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Bottom"/>
+                            <TextBlock Grid.Row="5" Grid.Column="0" Margin="0 0 0 5">Year To Date<LineBreak/>With Silents:</TextBlock>
+                            <TextBlock Grid.Row="5" Grid.Column="1" TextAlignment="Center" Foreground="{Binding CurrentPercentage.YTDWithSilents,
+                            Converter={StaticResource percentageColorConverter}}" Text="{Binding CurrentPercentage.YTDWithSilents, StringFormat='\{0\}%'}"
+                                       VerticalAlignment="Center" Margin="0,0,0,5"/>
+                            <Separator Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Bottom"/>
+                        </Grid>
+                    </GroupBox>
+                </Grid>
+            </GroupBox>
+        </Grid>
+    </ScrollViewer>
+</UserControl>

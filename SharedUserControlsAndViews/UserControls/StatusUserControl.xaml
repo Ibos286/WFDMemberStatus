@@ -1,0 +1,104 @@
+﻿<UserControl x:Class="WFDMemberStatus.UserControlsAndViews.StatusUserControl"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WFDMemberStatus.UserControlsAndViews"
+        xmlns:materialDesign ="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="12"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        mc:Ignorable="d" Loaded="StatusUserControlLoaded">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/UserControlsAndViews;component/ResourceDictionary.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.RadioButton.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Blue.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.LightBlue.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <DockPanel x:Name="StatusDockPanel">
+        <StackPanel DockPanel.Dock="Top" Orientation="Vertical">
+            <TextBlock x:Name="TopTitleBlock" Style="{StaticResource MaterialDesignHeadline4TextBlock}" TextAlignment="Center" Text="Westbury  Fire  Department"/>
+            <TextBlock x:Name="TitleBlock2" Style="{StaticResource MaterialDesignHeadline5TextBlock}" TextAlignment="Center" Text="Status View"/>
+            <Separator VerticalAlignment="Bottom"/>
+        </StackPanel>
+        <Grid DockPanel.Dock="Left">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <StackPanel x:Name="StatusFilterPanel" Grid.Row="0" Orientation="Vertical">
+                <TextBlock x:Name="CompanyLOSLabel" Margin="5,5,5,10" TextAlignment="Center"
+                               Style="{StaticResource MaterialDesignHeadline6TextBlock}">Filters</TextBlock>
+                <WrapPanel x:Name="CompanyFilterPanel" Orientation="Horizontal">
+                    <RadioButton x:Name="allCompanyRBChecked" Checked="CompanyFilterChecked" Tag="All"
+                                    Style="{StaticResource MaterialDesignChoiceChipPrimaryOutlineRadioButton}" IsChecked="True" GroupName="CompanyGroup">
+                        All Companies
+                    </RadioButton>
+                    <RadioButton x:Name="hooksCompanyRBChecked" Checked="CompanyFilterChecked" Tag="H&amp;L #1"
+                                    Style="{StaticResource MaterialDesignChoiceChipPrimaryOutlineRadioButton}" GroupName="CompanyGroup" Foreground="ForestGreen">
+                        Hook &amp; Ladder
+                    </RadioButton>
+                    <RadioButton x:Name="hose1RBChecked" Checked="CompanyFilterChecked" Tag="HOSE #1"
+                                    Style="{StaticResource MaterialDesignChoiceChipPrimaryOutlineRadioButton}" GroupName="CompanyGroup" Foreground="Firebrick">
+                        Hose Co. 1
+                    </RadioButton>
+                    <RadioButton x:Name="hose2RBChecked" Checked="CompanyFilterChecked" Tag="HOSE #2"
+                                    Style="{StaticResource MaterialDesignChoiceChipPrimaryOutlineRadioButton}" GroupName="CompanyGroup" Foreground="Blue">
+                        Hose Co. 2
+                    </RadioButton>
+                </WrapPanel>
+                <WrapPanel x:Name="LoSFilterPanel" Orientation="Horizontal">
+                    <RadioButton x:Name="allLOSRBChecked" IsChecked="True" Checked="LOSFilterChecked" Tag="All"
+                                     Style="{StaticResource MaterialDesignChoiceChipPrimaryOutlineRadioButton}" GroupName="rbgLOS">
+                        All Service Lengths
+                    </RadioButton>
+                    <RadioButton x:Name="le5RBChecked" Tag="LE5" Checked="LOSFilterChecked"
+                                     Style="{StaticResource MaterialDesignChoiceChipPrimaryOutlineRadioButton}" GroupName="rbgLOS">
+                        &lt;= 5 Years
+                    </RadioButton>
+                    <RadioButton x:Name="le10RBChecked" Tag="LE10" Checked="LOSFilterChecked"
+                                     Style="{StaticResource MaterialDesignChoiceChipPrimaryOutlineRadioButton}" GroupName="rbgLOS">
+                        &lt;= 10 Years
+                    </RadioButton>
+                    <RadioButton x:Name="lt20RBChecked" Tag="LT20" Checked="LOSFilterChecked"
+                                     Style="{StaticResource MaterialDesignChoiceChipPrimaryOutlineRadioButton}" GroupName="rbgLOS">
+                        &lt; 20 Years
+                    </RadioButton>
+                </WrapPanel>
+            </StackPanel>
+            <materialDesign:Card Grid.Row="1" DockPanel.Dock="Left" Margin="0 5 0 5">
+                <DataGrid x:Name="memberListView" AutoGenerateColumns="False"
+                         Style="{StaticResource MaterialDesignDataGrid}"
+                        SelectionChanged="ChangedMember"
+                        VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" IsReadOnly="True">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn x:Name="CompanyGridColumn" Header="Company" Binding="{Binding Company}"/>
+                        <DataGridTextColumn Header="Badge" Binding="{Binding Badge}"/>
+                        <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}"/>
+                        <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </materialDesign:Card>
+            <Button Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonAssist.CornerRadius="10"
+                Margin="10" Grid.Row="2" Click="PrintSelectedMemberClicked" HorizontalAlignment="Center">Print Selected Member(s)</Button>
+            <Button Style="{StaticResource MaterialDesignRaisedButton}" materialDesign:ButtonAssist.CornerRadius="10"
+                Margin="10" Grid.Row="3" Click="PrintMembersInView" HorizontalAlignment="Center">Print All Members in View</Button>
+        </Grid>
+        <UserControl x:Name="IndividualContainer"/>
+    </DockPanel>
+</UserControl>
