@@ -12,7 +12,6 @@ using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using WFDMemberStatus.Models;
 
 namespace WFDMemberStatus.UserControlsAndViews
 {
@@ -21,12 +20,8 @@ namespace WFDMemberStatus.UserControlsAndViews
     /// </summary>
     public partial class PrintViewer : Window
     {
-        public bool isSinglePage;
-        public List<Member> probationMembers;
-        public IndividualProbationStatus individualMemberStatus;
         public string documentPaperSize;
         public List<UserControl> userControls;
-        public Grid gridForPrint;
         public ReportPrint reportPrint;
         public PrintViewer()
         {
@@ -66,8 +61,10 @@ namespace WFDMemberStatus.UserControlsAndViews
                         fixedPage.Width = 1056;
                         break;
                     case "Envelope":
-                        fixedPage.Height = 300;
-                        fixedPage.Width = 900;
+                        fixedPage.Height = 900;
+                        fixedPage.Width = 300;
+                        RotateTransform rotateTransform = new RotateTransform(90);
+                        userControl.LayoutTransform = rotateTransform;
                         break;
                     default:
                         break;

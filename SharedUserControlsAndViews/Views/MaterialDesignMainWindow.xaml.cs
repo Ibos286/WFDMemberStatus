@@ -28,11 +28,13 @@ namespace WFDMemberStatus.UserControlsAndViews
             StatusUserControl memberUserControl = new StatusUserControl("Member");
             StatusUserControl probationUserControl = new StatusUserControl("Probation");
             MembersNeedingUserControl membersNeedingUserControl = new MembersNeedingUserControl();
+            PrintEnvelopesUserControl printEnvelopesUserControl = new PrintEnvelopesUserControl();
 
             NotificationUserControl.Content = notificationUserControl;
             MemberStatusControl.Content = memberUserControl;
             ProbationMemberStatusControl.Content = probationUserControl;
             MembersNeeding.Content = membersNeedingUserControl;
+            printEnvelopes.Content = printEnvelopesUserControl;
         }
     }
 }

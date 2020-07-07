@@ -33,6 +33,14 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Hose1|AnyCPU'">
+    <OutputPath>bin\Hose1\</OutputPath>
+    <DefineConstants>HOSE1</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'HookAndLadder|AnyCPU'">
+    <OutputPath>bin\HookAndLadder\</OutputPath>
+    <DefineConstants>HOOKANDLADDER</DefineConstants>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="MaterialDesignColors, Version=1.2.6.1513, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MaterialDesignColors.1.2.6\lib\net45\MaterialDesignColors.dll</HintPath>
@@ -61,6 +69,9 @@
     </Compile>
     <Compile Include="UserControls\MembersNeedingUserControl.xaml.cs">
       <DependentUpon>MembersNeedingUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\PrintEnvelopesUserControl.xaml.cs">
+      <DependentUpon>PrintEnvelopesUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\StatusUserControl.xaml.cs">
       <DependentUpon>StatusUserControl.xaml</DependentUpon>
@@ -167,6 +178,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\MembersNeedingUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\PrintEnvelopesUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

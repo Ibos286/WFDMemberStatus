@@ -15,7 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WFDMemberStatus.Models;
 
-namespace UserControlsAndViews
+namespace WFDMemberStatus.UserControlsAndViews
 {
     /// <summary>
     /// Interaction logic for Size10Envelope.xaml
@@ -30,6 +30,16 @@ namespace UserControlsAndViews
         {
             InitializeComponent();
             DataContext = member;
+        }
+        private void ControlLoaded(object sender, RoutedEventArgs e)
+        {
+#if HOOKANDLADDER
+            AddressLine1.Text = "Hook & Ladder Company #1";
+#elif HOSE1
+            AddressLine1.Text = "Hose Company # 1";
+#else
+            AddressLine1.Text = "";
+#endif
         }
     }
 }
