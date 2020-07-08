@@ -10,7 +10,7 @@ using System.Xml.Serialization;
 using Microsoft.VisualBasic.FileIO;
 using WFDMemberStatus.Models;
 
-namespace CreateXMLFiles
+namespace WFDMemberStatus.CreateXMLFiles
 {
     class Program
     {
@@ -180,6 +180,7 @@ namespace CreateXMLFiles
                         if (dateTime != flagDate)
                         {
                             member.BirthDate = dateTime;
+                            member.Age = CalculateAge(member.BirthDate);
                         }
                     }
                     if (!string.IsNullOrEmpty(fields[15]))
@@ -222,6 +223,14 @@ namespace CreateXMLFiles
             }
 
             return members;
+        }
+
+        private static int CalculateAge(DateTime birthday)
+        {
+            int today = int.Parse(DateTime.Now.ToString("yyyyMMdd"));
+            int dob = int.Parse(birthday.ToString("yyyyMMdd"));
+
+            return (today - dob) / 10000;
         }
         private static List<Percentage> CreatePercentageXML(TextFieldParser textFieldParser)
         {

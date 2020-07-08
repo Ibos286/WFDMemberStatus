@@ -26,14 +26,15 @@ namespace WFDMemberStatus.UserControlsAndViews
     public partial class NotificationUserControl : UserControl
     {
         public readonly MemberCollection memberCollection;
-        public readonly List<Member> members;
-        public List<Member> anniversaries;
+        public readonly IEnumerable<Member> members;
+        public IEnumerable<Member> anniversaries;
+        public IEnumerable<Member> birthdays;
         public NotificationUserControl()
         {
             InitializeComponent();
 
             memberCollection = new MemberCollection();
-            members = new List<Member>();
+            //members = new List<Member>();
 
             anniversaries = memberCollection.members.ToList<Member>().FindAll( delegate (Member member)
             {
@@ -41,6 +42,12 @@ namespace WFDMemberStatus.UserControlsAndViews
             });
             anniversaries = anniversaries.OrderBy(x => x.ServiceDate).ToList();
             AnniversariesListBox.ItemsSource = anniversaries;
+            birthdays = memberCollection.members.ToList<Member>().FindAll( delegate (Member member)
+            {
+                return member.BirthDate.Month == DateTime.Now.Month;
+            });
+            birthdays = birthdays.OrderBy(x => x.BirthDate).ToList();
+            BirthdaysListBox.ItemsSource = birthdays;
         }
     }
 }

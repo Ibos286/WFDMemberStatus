@@ -49,7 +49,16 @@ namespace WFDMemberStatus.Models
 			set { birthDate = value; }
 		}
 
-		private string address;
+        private int age;
+
+        public int Age
+        {
+            get { return age; }
+            set { age = value; }
+        }
+
+
+        private string address;
 
 		public string Address
 		{
